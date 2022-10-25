@@ -1,6 +1,7 @@
 import { createClient } from 'contentful';
 import React from 'react'
 import Layout from '../../components/layout/Layout'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 
 // 1 - connexion au contentful
@@ -31,28 +32,41 @@ export async function getStaticPaths() {
 
 // 3 - Récupere la data du show //
 /////////////////////////////////
-export async function getStaticProps(context) {
-  console.log(context);
+export async function getStaticProps({params}) {
+  // A - récupère la date une fois que la promesse success
+  const response = await client.getEntries({
+    content_type:"projets",
+    'fields.slug': params.slug,
+  })
+
+  // B - je stock la data dans variable projet
+  const projet = response.items;
+
   return {
     // Passed to the page component as props
-    props: { post: {} },
+    props: { projet: projet[0] },
   }
 }
 
 
-export default function show() {
+export default function show({projet}) {
+  const {title, description, roles, skills, featuredImage, urlDuProjet} = projet.fields;
   return (
     <Layout>
         <div className='flex items-center justify-center gap-20'>
-            <div className=''>
-                <p className='text-2xl font-bold uppercase'>titre :</p>
-                <p className='text-xl font-medium uppercase'>description :</p>
-                <p><span className='font-semibold'>Rôle :</span> Développeur front React</p>
-                <p><span className='font-semibold'>Stack :</span>React/Tailwindcss/fontawesome/git</p>
-                <a href="#" className='border-2 border-gray-500'>Voir le projet</a>
+            <div>
+                <p className='text-2xl font-bold uppercase'>titre : {title}</p>
+                <div className='text-xl font-medium uppercase'>description : {documentToReactComponents(description)}</div>
+                <p><span className='font-semibold'>Rôle :</span> {roles}</p>
+                <ul className='font-semibold'>
+                  <li>Skills :</li>
+                  {skills.map((skill) => (
+                  <li key={skill}>{skill}</li>))}
+                </ul>
+                <a href={`/www.${urlDuProjet}`} target='_blank' className='border-2 border-gray-500'>Voir le projet</a>
             </div>
-            <div className='shadow-2xl px-20 w-[50%]'>
-                <img src="../img/react-code-du-travail-screen.png" alt="" />
+            <div className='shadow-2xl w-[50%]'>
+                <img src={featuredImage.fields.file.url} alt="" />
             </div>
         </div>
     </Layout>
