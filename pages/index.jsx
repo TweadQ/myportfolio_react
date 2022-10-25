@@ -6,7 +6,8 @@ import SectionReseau from '../components/SectionReseau'
 import SectionShow from '../components/SectionShow'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Home({projets}) {
+  // console.log(projets);
   return (
     <Layout>
       <div className={styles.container}>
@@ -16,7 +17,7 @@ export default function Home() {
         </div>
         <SectionAbout />
         <SectionCompetences />
-        <SectionShow />
+        <SectionShow projets={projets}/>
         <SectionReseau />
       </div>
     </Layout>
@@ -26,8 +27,17 @@ export default function Home() {
 
 export async function getStaticProps() {
   // 1 - connexion au contentful
-  const client = createClient();
+  const client = createClient({
+    space : process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
+    accessToken : process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
+  });
+  // 2 - récupère la date une fois que la promesse success
+  const response = await client.getEntries({content_type:"projets"})
+  // console.log(response);
+  // 3 - on envoie la data dans les props de la page
   return {
-    props: {}, // will be passed to the page component as props
+    props: {
+      projets : response.items,
+    }, // will be passed to the page component as props
   }
 }

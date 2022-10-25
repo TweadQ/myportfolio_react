@@ -10,7 +10,7 @@ export default function Navbar() {
   <div className="flex-none">
     <ul className="menu menu-horizontal p-0">
       <li className='uppercase font-bold'><Link href='/'>à propos de moi</Link></li>
-      <li className='uppercase font-bold'><Link href='show'>mes réalisations</Link></li>
+      <li className='uppercase font-bold'><Link href='projets/[slug].jsx'>mes réalisations</Link></li>
       <li className='uppercase font-bold'><a>contact</a></li>
     </ul>
   </div>
