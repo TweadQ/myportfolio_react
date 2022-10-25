@@ -1,0 +1,14 @@
+1 - installer un nouveau projet
+2 - installer tailwind
+3 - développer son projet
+
+Contentful
+///////////////
+1 - inscription ou connexion 
+2 - création des content-model (migration)
+3 - rajoute 3items à mon content-model
+
+Nextjs
+//////
+1 - install contentful = npm i contentful
+2 - connexion à l'API contentful
