@@ -67,7 +67,7 @@ export default function show({projet}) {
                   {skills.map((skill) => (
                   <li key={skill}>{skill}</li>))}
                 </ul>
-                <a href={`/www.${urlDuProjet}`} target='_blank' className='border-2 border-gray-500'>Voir le projet</a>
+                <a href={`/www.${urlDuProjet}`} rel="noreferrer" target='_blank' className='border-2 border-gray-500'>Voir le projet</a>
             </div>
             <div className='shadow-2xl w-[50%]'>
                 <img src={featuredImage.fields.file.url} alt={`Quentin portfolio ${title}`} />
