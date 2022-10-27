@@ -9,7 +9,7 @@ import styles from '../styles/Home.module.css'
 export default function Home({projets}) {
   // console.log(projets);
   return (
-    <Layout>
+    <Layout title="Accueil" metaContent='Bienvenue dans mon portfolio. Je suis Quentin.L Développeur Web Laravel, React, Tailwindcss'>
       <div className={styles.container}>
         <div className='flex flex-col justify-center items-center mb-24'>
           <h1 className='uppercase font-bold text-4xl mt-24'>développeur web full-stack</h1>
@@ -32,7 +32,11 @@ export async function getStaticProps() {
     accessToken : process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
   });
   // 2 - récupère la date une fois que la promesse success
-  const response = await client.getEntries({content_type:"projets"})
+  const response = await client.getEntries({
+    content_type:"projets",
+    limit : 2,
+    order : "sys.createdAt",
+  })
   // console.log(response);
   // 3 - on envoie la data dans les props de la page
   return {

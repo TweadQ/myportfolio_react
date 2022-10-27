@@ -52,7 +52,11 @@ export async function getStaticProps({params}) {
 export default function show({projet}) {
   const {title, description, roles, skills, featuredImage, urlDuProjet} = projet.fields;
   return (
-    <Layout>
+    <Layout 
+      title={title} 
+      metaContent={`Le projet ${title} est un projet fait avec Laravel & React`}
+      image={`http${featuredImage.fields.file.url}`}
+    >
         <div className='flex items-center justify-center gap-20'>
             <div>
                 <p className='text-2xl font-bold uppercase'>titre : {title}</p>
@@ -66,7 +70,7 @@ export default function show({projet}) {
                 <a href={`/www.${urlDuProjet}`} target='_blank' className='border-2 border-gray-500'>Voir le projet</a>
             </div>
             <div className='shadow-2xl w-[50%]'>
-                <img src={featuredImage.fields.file.url} alt="" />
+                <img src={featuredImage.fields.file.url} alt={`Quentin portfolio ${title}`} />
             </div>
         </div>
     </Layout>
